@@ -143,6 +143,55 @@ public function update_repo_form( $p_repo ) {
 <?php
 	}
 
+	# 解决简体中文乱码的问题
+	function json_url( $p_url, $p_member = null ) {
+		$t_data = url_get( $p_url );
+		$t_json = json_decode( $t_data );
+
+		if( is_null( $p_member ) ) {
+			return $t_json;
+		} else if( property_exists( $t_json, $p_member ) ) {
+			return $t_json->$p_member;
+		} else {
+			return false;
+		}
+	}
+
+	private function get_repo_id( $p_repo, $p_by_namespase, &$p_error ) {
+			$f_hub_reponame = gpc_get_string( 'hub_reponame' );
+			$f_hub_repoid = null;
+
+			$t_group_path = explode("/", $f_hub_reponame);
+			if ( count($t_group_path) !== 2 ) {
+				plugin_error( plugin_lang_get( "error_invalid_repoid" ) . "\n" . $f_hub_reponame );
+			}
+
+			$t_uri = null;
+			if ( $p_by_namespase ) {
+				$t_uri = $this->api_uri( $p_repo, "projects" ) . "&search=" . $t_group_path[0];
+			} else {
+				$t_uri = $this->api_uri( $p_repo, "projects/search/" . $t_group_path[1] );
+			}
+			$p_error = $t_uri;
+			$t_member = null;
+			$t_json = $this->json_url( $t_uri, $t_member );
+
+			if( is_null( $t_json ) ) {
+				return $f_hub_repoid;
+			}
+
+			foreach( $t_json as $project ) {
+				if (   property_exists( $project, 'path_with_namespace' )
+					&& $project->path_with_namespace == $f_hub_reponame
+					&& property_exists( $project, 'id' )
+				) {
+					$f_hub_repoid = (string)$project ->id;
+				}
+			}
+
+			return $f_hub_repoid;
+	}
+
 	public function update_repo( $p_repo ) {
 		$f_hub_root = gpc_get_string( 'hub_root' );
 		$f_hub_repoid = gpc_get_string( 'hub_repoid' );
@@ -151,21 +200,16 @@ public function update_repo_form( $p_repo ) {
 		# Getting the repoid doesnt seem to work with the latest gitlab - but we can get all the
 		# repos the current user can access and go through them to find the correct id
 		if( empty( $f_hub_repoid ) ) {
-			$t_hub_reponame_enc = urlencode( $f_hub_reponame );
-			$t_uri = $this->api_uri( $p_repo, "projects" );
-			$t_member = null;
-			$t_json = json_url( $t_uri, $t_member );
-
-			$f_hub_repoid = 'RepoName is invalid';
-			if( !is_null( $t_json ) ) {
-				foreach( $t_json as $project ) {
-					if (   property_exists( $project, 'path_with_namespace' )
-						&& $project->path_with_namespace == $f_hub_reponame
-						&& property_exists( $project, 'id' )
-					) {
-						$f_hub_repoid = (string)$project ->id;
-					}
-				}
+			$f_uri_1 = null;
+			$f_uri_2 = null;
+			$f_hub_repoid = (string)$this->get_repo_id($p_repo, true, $f_uri_1);
+			if ( empty( $f_hub_repoid ) )
+			{
+				$f_hub_repoid = (string)$this->get_repo_id($p_repo, false, $f_uri_2);
+			}
+			if ( empty( $f_hub_repoid ) )
+			{
+				plugin_error(  plugin_lang_get( "error_invalid_repoid" )  . "\n" . $p_repo->info['hub_root'] . "\n" . $f_uri_1 . "\n" . $f_uri_2 . "\n" );
 			}
 		}
 		$f_hub_app_secret = gpc_get_string( 'hub_app_secret' );
@@ -186,14 +230,20 @@ public function update_repo_form( $p_repo ) {
 
 	private function api_uri( $p_repo, $p_path ) {
 		$t_root = $p_repo->info['hub_root'];
+		if ( empty($t_root) ) {
+			$t_root = gpc_get_string( 'hub_root' );
+		}
 		$t_uri = $t_root . '/api/v3/' . $p_path;
 
-		if( isset( $p_repo->info['hub_app_secret'] ) ) {
+		#if( isset( $p_repo->info['hub_app_secret'] ) ) {
 			$t_access_token = $p_repo->info['hub_app_secret'];
+			if ( empty($t_access_token) ) {
+				$t_access_token = gpc_get_string( 'hub_app_secret' );
+			}
 			if ( !is_blank( $t_access_token ) ) {
 				$t_uri .= '?private_token=' . $t_access_token;
 			}
-		}
+		#}
 
 		return $t_uri;
 	}
@@ -256,9 +306,13 @@ public function update_repo_form( $p_repo ) {
 		$t_uri = $this->api_uri( $p_repo, "projects/$t_repoid/repository/branches" );
 
 		$t_member = null;
-		$t_json = json_url( $t_uri, $t_member );
+		echo "<font>t_uri: " . $t_uri . "</font><br />";
+		echo "<font>t_member: " . $t_member . "</font><br />";
+		$t_json = $this->json_url( $t_uri, $t_member );
+		echo "<font>t_json: " . $t_json . "</font><br />";
 		$t_branches = array();
 		foreach( $t_json as $t_branch ) {
+			echo "<font>t_branch: " . $t_branch->name . "</font><br />";
 			if( empty( $t_branches_allowed ) || in_array( $t_branch->name, $t_branches_allowed ) ) {
 				$t_branches[] = $t_branch;
 			}
@@ -316,7 +370,7 @@ public function update_repo_form( $p_repo ) {
 			echo "Retrieving $t_commit_id ... <br/>";
 			$t_uri = $this->api_uri( $p_repo, "projects/$t_repoid/repository/commits/$t_commit_id" );
 			$t_member = null;
-			$t_json = json_url( $t_uri, $t_member );
+			$t_json = $this->json_url( $t_uri, $t_member );
 			if ( false === $t_json || is_null( $t_json ) ) {
 				# Some error occured retrieving the commit
 				echo "failed.\n";
