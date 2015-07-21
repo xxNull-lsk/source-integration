@@ -17,55 +17,6 @@ html_page_top1( plugin_lang_get( 'title' ) );
 html_page_top2();
 ?>
 
-<br/>
-<table class="<?php echo $t_class ?>" align="center" cellspacing="1">
-
-<tr>
-<td class="form-title" colspan="<?php echo $t_title_span ?>"><?php echo plugin_lang_get( 'repositories' ) ?></td>
-<td class="right" colspan="<?php echo $t_links_span ?>">
-<?php
-print_bracket_link( plugin_page( 'search_page' ), plugin_lang_get( 'search' ) );
-if ( $t_can_manage ) { print_bracket_link( plugin_page( 'manage_config_page' ), plugin_lang_get( 'configuration' ) ); }
-?>
-</td>
-</tr>
-
-<tr class="row-category">
-<td width="30%"><?php echo plugin_lang_get( 'repository' ) ?></td>
-<td width="15%"><?php echo plugin_lang_get( 'type' ) ?></td>
-<?php if ( $t_show_stats ) { ?>
-<td width="10%"><?php echo plugin_lang_get( 'changesets' ) ?></td>
-<td width="10%"><?php echo plugin_lang_get( 'files' ) ?></td>
-<td width="10%"><?php echo plugin_lang_get( 'issues' ) ?></td>
-<?php } ?>
-<td width="25%"><?php echo plugin_lang_get( 'actions' ) ?></td>
-</tr>
-
-<?php foreach( $t_repos as $t_repo ) { ?>
-<tr <?php echo helper_alternate_class() ?>>
-<td><?php echo string_display( $t_repo->name ) ?></td>
-<td class="center"><?php echo string_display( SourceType( $t_repo->type ) ) ?></td>
-<?php if ( $t_show_stats ) { $t_stats = $t_repo->stats(); ?>
-<td class="right"><?php echo $t_stats['changesets'] ?></td>
-<td class="right"><?php echo $t_stats['files'] ?></td>
-<td class="right"><?php echo $t_stats['bugs'] ?></td>
-<?php } ?>
-<td class="center">
-<?php 
-	print_bracket_link( plugin_page( 'list' ) . '&id=' . $t_repo->id, plugin_lang_get( 'changesets' ) );
-	if ( $t_can_manage ) {
-		if ( preg_match( '/^Import \d+-\d+\d+/', $t_repo->name ) ) {
-			print_bracket_link( plugin_page( 'repo_delete' ) . '&id=' . $t_repo->id . form_security_param( 'plugin_Source_repo_delete' ), plugin_lang_get( 'delete' ) );
-		}
-		print_bracket_link( plugin_page( 'repo_manage_page' ) . '&id=' . $t_repo->id, plugin_lang_get( 'manage' ) );
-	}
-?>
-</td>
-</tr>
-<?php } ?>
-
-</table>
-
 <?php if ( $t_can_manage ) { ?>
 <br/>
 <form action="<?php echo plugin_page( 'repo_create' ) ?>" method="post">
@@ -100,6 +51,77 @@ if ( $t_can_manage ) { print_bracket_link( plugin_page( 'manage_config_page' ), 
 </table>
 </form>
 <?php } ?>
+
+<br/>
+<table class="<?php echo $t_class ?>" align="center" cellspacing="1">
+
+<tr>
+<td class="form-title" colspan="<?php echo $t_title_span ?>"><?php echo plugin_lang_get( 'repositories' ) ?></td>
+<td class="right" colspan="<?php echo $t_links_span ?>">
+<?php
+print_bracket_link( plugin_page( 'search_page' ), plugin_lang_get( 'search' ) );
+if ( $t_can_manage ) { print_bracket_link( plugin_page( 'manage_config_page' ), plugin_lang_get( 'configuration' ) ); }
+$t_index = 1;
+?>
+</td>
+</tr>
+
+<tr class="row-category">
+<td width="5%">Index</td>
+<td width="35%"><?php echo plugin_lang_get( 'repository' ) ?></td>
+<?php if ( $t_show_stats ) { ?>
+<td width="10%"><?php echo plugin_lang_get( 'changesets' ) ?></td>
+<td width="10%"><?php echo plugin_lang_get( 'files' ) ?></td>
+<td width="10%"><?php echo plugin_lang_get( 'issues' ) ?></td>
+<?php } ?>
+<td width="15%"><?php echo plugin_lang_get( 'type' ) ?></td>
+</tr>
+
+<?php foreach( $t_repos as $t_repo ) { ?>
+<tr <?php echo helper_alternate_class() ?>>
+<td><?php echo $t_index; $t_index = $t_index + 1; ?></td>
+<td>
+<table width="100%"><tr>
+<td class="left">
+<?php
+	$t_stats = $t_repo->stats();
+	if ( !$t_show_stats && $t_stats['changesets'] > 0 ) {
+		print_link( plugin_page( 'list' ) . '&id=' . $t_repo->id, string_display( $t_repo->name ));
+	} else {
+		echo string_display( $t_repo->name );
+	}
+?>
+</td>
+<td class="right">
+<?php 
+	if ( $t_can_manage ) {
+		if ( preg_match( '/^Import \d+-\d+\d+/', $t_repo->name ) ) {
+			print_bracket_link( plugin_page( 'repo_delete' ) . '&id=' . $t_repo->id . form_security_param( 'plugin_Source_repo_delete' ), plugin_lang_get( 'delete' ) );
+		}
+		print_bracket_link( plugin_page( 'repo_manage_page' ) . '&id=' . $t_repo->id, plugin_lang_get( 'manage' ) );
+	}
+?>
+</td>
+</tr>
+</table>
+</td>
+<?php if ( $t_show_stats ) { $t_stats = $t_repo->stats(); ?>
+<td class="right"><?php
+	if ( $t_stats['changesets'] > 0 ) {
+		print_link( plugin_page( 'list' ) . '&id=' . $t_repo->id, $t_stats['changesets']);
+	} else {
+		echo $t_stats['changesets'];
+	}
+	?>
+</td>
+<td class="right"><?php echo $t_stats['files'] ?></td>
+<td class="right"><?php echo $t_stats['bugs'] ?></td>
+<?php } ?>
+<td class="center"><?php echo string_display( SourceType( $t_repo->type ) ) ?></td>
+</tr>
+<?php } ?>
+
+</table>
 
 <?php
 html_page_bottom1( __FILE__ );
