@@ -1,0 +1,22 @@
+<?php
+
+# Copyright (c) 2014 Johannes Goehr
+# Copyright (c) 2014 Bob Clough
+# Licensed under the MIT license
+
+$s_plugin_SourceGitlab_ = '';
+$s_plugin_SourceGitlab_gitlab = 'GitLab';
+$s_plugin_SourceGitlab_title = '集成GitLab';
+$s_plugin_SourceGitlab_description = '使用源码集成框架将GitLab集成进来。';
+
+$s_plugin_SourceGitlab_hub_root = 'GitLab 根路径<br /><span class="small">你的GitLab服务器的完整URL，例如http://192.168.8.8</span>';
+$s_plugin_SourceGitlab_hub_repoid = 'GitLab 仓库ID<br /><span class="small">比如为数字，例如1</span>';
+$s_plugin_SourceGitlab_hub_reponame = 'GitLab长裤的名字<br /><span class="small">Name & Namespace with no leading or trailing slashes (namespace/project)</span>';
+$s_plugin_SourceGitlab_hub_app_secret = 'GitLab API Key<br /><span class="small">api key for mantis user (continuous user)</span>';
+$s_plugin_SourceGitlab_master_branch = '主分支<br/><span class="small">(使用逗号隔开的一个列表或者*)</span>';
+
+$s_plugin_SourceGitlab_back_repo = '返回代码仓库';
+
+$s_plugin_SourceGitlab_error_invalid_branch = '主分支中包含无效字符';
+$s_plugin_SourceGitlab_error_invalid_reponame = '仓库名称无效。';
+$s_plugin_SourceGitlab_error_invalid_repoid = '仓库ID无效。';

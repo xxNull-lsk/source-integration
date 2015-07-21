@@ -1,0 +1,147 @@
+<?php
+
+# Copyright (c) 2012 John Reese
+# Licensed under the MIT license
+
+$s_plugin_Source_ = '';
+$s_plugin_Source_title = '源码控制系统集成';
+$s_plugin_Source_description = '使用一套抽象的API支持多种的源码控制系统。';
+
+$s_plugin_Source_repository = '代码仓库';
+$s_plugin_Source_repositories = '代码仓库';
+$s_plugin_Source_changeset = '变更';
+$s_plugin_Source_changesets = '变更';
+$s_plugin_Source_file = '文件';
+$s_plugin_Source_files = '文件';
+$s_plugin_Source_diff = '差异';
+
+$s_plugin_Source_name = '名称';
+$s_plugin_Source_type = '类型';
+$s_plugin_Source_branch = '分支';
+$s_plugin_Source_action = 'Action';
+$s_plugin_Source_author = '作者';
+$s_plugin_Source_committer = '提交者';
+$s_plugin_Source_username = '账号名';
+$s_plugin_Source_timestamp = '时间戳';
+$s_plugin_Source_parent = 'Parent';
+$s_plugin_Source_url = 'URL';
+$s_plugin_Source_info = '扩展信息';
+$s_plugin_Source_revision = '修订';
+$s_plugin_Source_date_begin = '开始日期';
+$s_plugin_Source_date_end = '结束日期';
+$s_plugin_Source_message = '消息';
+$s_plugin_Source_filename = '文件名';
+$s_plugin_Source_ported = 'Ported';
+$s_plugin_Source_vcs_username = '源码控制系统的账号名';
+
+$s_plugin_Source_issue = '问题';
+$s_plugin_Source_issues = '问题';
+$s_plugin_Source_actions = '操作';
+
+$s_plugin_Source_details = '详情';
+$s_plugin_Source_browse = '浏览';
+$s_plugin_Source_manage = '管理';
+$s_plugin_Source_create = '创建';
+$s_plugin_Source_import = '导入';
+$s_plugin_Source_edit = '编辑';
+$s_plugin_Source_update = '更新';
+$s_plugin_Source_delete = '删除';
+$s_plugin_Source_search = '搜索';
+$s_plugin_Source_attach = '关联';
+$s_plugin_Source_detach = '分离';
+$s_plugin_Source_modify_search = '修改搜索';
+$s_plugin_Source_new_search = '新建搜索';
+$s_plugin_Source_permalink = 'Permalink';
+$s_plugin_Source_select_one = '(请选择一个类型)';
+$s_plugin_Source_select_any = '[任意]';
+$s_plugin_Source_pending = '未指定';
+$s_plugin_Source_na = 'N/A';
+
+$s_plugin_Source_create_repository = '创建代码仓库';
+$s_plugin_Source_manage_repository = '管理代码仓库';
+$s_plugin_Source_update_repository = '更新代码仓库';
+$s_plugin_Source_delete_repository = '删除代码仓库';
+$s_plugin_Source_update_configuration = '更新配置';
+$s_plugin_Source_search_changesets = '搜索变更';
+
+$s_plugin_Source_back = '返回索引页面';
+$s_plugin_Source_back_repo = '返回代码仓库页面';
+$s_plugin_Source_back_changeset = '返回变更页面';
+$s_plugin_Source_import_full = '导入所有内容';
+$s_plugin_Source_import_latest = '导入最新的数据';
+$s_plugin_Source_related_changesets = '关联的变更';
+$s_plugin_Source_affected_issues = '相关的问题';
+$s_plugin_Source_attach_to_issue = '关联到问题:';
+
+$s_plugin_Source_configuration = '配置';
+$s_plugin_Source_api_key = 'API Key';
+$s_plugin_Source_api_key_info = 'This is a secret password to be used by services sending commit data to Mantis.<br/>To generate a random key, run <code>openssl rand -hex 12</code> or similar.';
+$s_plugin_Source_allow_remote_checkin = '允许远程Check-In<br/><span class="small">(不推荐)</span>';
+$s_plugin_Source_remote_checkin_urls = '允许的地址';
+$s_plugin_Source_allow_remote_import = '允许远程导入<br/><span class="small">(不推荐)</span>';
+$s_plugin_Source_remote_import_urls = '允许的地址';
+$s_plugin_Source_view_threshold = '查看权限';
+$s_plugin_Source_update_threshold = '更新权限';
+$s_plugin_Source_manage_threshold = '管理权限';
+$s_plugin_Source_username_threshold = '设置用户名权限';
+$s_plugin_Source_buglink_regex_1 = '链接Bug的正则表达式1';
+$s_plugin_Source_buglink_regex_2 = '链接Bug的正则表达式2';
+$s_plugin_Source_bugfix_regex_1 = '修复Bug的正则表达式1';
+$s_plugin_Source_bugfix_regex_2 = '修复Bug的正则表达式2';
+$s_plugin_Source_bugfix_status = 'Bug修复后的状态';
+$s_plugin_Source_bugfix_status_pvm = 'Bug Fixed Product Status';
+$s_plugin_Source_bugfix_status_off = '[Disabled]';
+$s_plugin_Source_bugfix_status_default = '[Resolved Status]';
+$s_plugin_Source_bugfix_resolution = 'Bug修复后的处理状况';
+$s_plugin_Source_bugfix_handler = 'Bug修复后分配给提交者';
+$s_plugin_Source_bugfix_message = 'Bug修复后的消息模板';
+$s_plugin_Source_bugfix_message_info = 'Use $1 for branch, $2 for revision, $3 for timestamp, $4 for commit message, $5 for repository name, or $6 for changeset ID.';
+$s_plugin_Source_bugfix_message_view_status = 'Bug Fixed Message View State';
+$s_plugin_Source_bugfix_message_view_status_info = 'Note: if the changeset\'s author/committer does not have <em>private_bugnote_threshold</em>, the note will be Public regardless of this setting.';
+$s_plugin_Source_reset = '重置为默认';
+$s_plugin_Source_menu_links = '主菜单的链接';
+$s_plugin_Source_show_repo_link = '代码仓库';
+$s_plugin_Source_show_search_link = '搜索代码';
+$s_plugin_Source_show_repo_stats = '统计代码仓库';
+$s_plugin_Source_enabled_features = '激活的特性';
+$s_plugin_Source_enable_linking = '变更链接<span class="small">([sv]:&lt;reponame&gt;:&lt;revision&gt;:)</span>';
+$s_plugin_Source_enable_mapping = '分支映射';
+$s_plugin_Source_enable_resolving = 'Resolve Fixed Issues';
+$s_plugin_Source_enable_message = '发送Bug已经修正消息';
+$s_plugin_Source_enable_porting = 'Porting Status';
+$s_plugin_Source_enable_product_matrix = 'Product Matrix Integration';
+
+$s_plugin_Source_branch_mapping = '分支映射';
+$s_plugin_Source_mapping_update = '更新映射';
+$s_plugin_Source_mapping_strategy = '策略';
+$s_plugin_Source_mapping_version = '版本';
+$s_plugin_Source_mapping_version_info = '<acronym title="Only used with the Explicit Version strategy.">?</acronym>';
+$s_plugin_Source_mapping_regex = '正则表达式';
+$s_plugin_Source_mapping_regex_info = '<acronym title="Only apply the selected strategy to versions matching the given PCRE-style regex.">?</acronym>';
+$s_plugin_Source_mapping_create = '创建映射';
+$s_plugin_Source_mapping_explicit = 'Explicit Version';
+$s_plugin_Source_mapping_near = 'Nearest Release Date';
+$s_plugin_Source_mapping_far = 'Furthest Release Date';
+$s_plugin_Source_mapping_first = 'Version Sorted First';
+$s_plugin_Source_mapping_last = 'Version Sorted Last';
+
+$s_plugin_Source_changeset_attached = '附加变更';
+$s_plugin_Source_changeset_removed = '移除变更';
+
+$s_plugin_Source_ensure_delete = '确定要删除代码仓库(%s)，以及它的所有历史？';
+$s_plugin_Source_ensure_import_full = '即将导入新的数据，然后销毁旧的数据，在这个过程中需要使用shell访问代码仓库。要继续吗？';
+$s_plugin_Source_ensure_import_latest = '即将导入最近的数据，在这个过程中需要使用shell访问代码仓库。要继续吗？';
+$s_plugin_Source_import_results = '导入结果';
+$s_plugin_Source_import_stats = '导入了 %s个变更, %s个文件, 并且引用了%s个Bug。';
+$s_plugin_Source_import_repo_error = '导入时发生错误。';
+
+$s_plugin_Source_invalid_checkin_url = '无效的远程check-in地址';
+$s_plugin_Source_invalid_import_url = '无效的远程导入地址';
+$s_plugin_Source_invalid_repo = '无效的代码仓库名称';
+$s_plugin_Source_invalid_changeset = '无法加载变更的信息';
+
+$s_plugin_Source_import_latest_failed = '导入代码仓库最近的数据失败。';
+$s_plugin_Source_import_full_failed = '导入代码仓库的全部数据失败。';
+
+$s_plugin_Source_changeset_column_title = 'C';
+
