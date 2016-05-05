@@ -346,7 +346,8 @@ function Source_Process_Changesets( $p_changesets, $p_repo=null ) {
 			}
 
 		} else {
-			if ( $t_bugfix_status > 0 && $t_bug->status != $t_bugfix_status ) {
+			if ( $t_bugfix_status > 0 && $t_bug->status < $t_bugfix_status &&
+				 $t_changeset->branch !== "dev" && $t_changeset->branch !== "master" ) {
 				$t_bug->status = $t_bugfix_status;
 				$t_update = true;
 			} else if ( $t_enable_resolving && $t_bugfix_status == -1 && $t_bug->status < $t_resolved_threshold ) {
